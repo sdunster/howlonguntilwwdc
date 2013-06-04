@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>How Long Until WWDC?</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<style type="text/css">
+body {
+	color: black;
+	font-family: "Helvetica Neue", "Helvetica", sans-serif;
+	text-align: center;
+	font-size: 1.2em;
+	margin: 20px 10px;
+}
+img {
+	margin: 0 auto;
+	width: 220px;
+	height: 220px;
+}
+p#countdown {
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #222222;
+}
+</style>
+</head>
+<body class="home">
+
+<a href="http://developer.apple.com/wwdc"><img src="wwdc.jpg" alt="WWDC" /></a>
+
+<p>The WWDC Keynote begins at <span id="timestamp">Mon, 10 June 2013 10:00 PDT</span> in San Francisco,<br />
+which is at <span id="time_local"></span> on <span id="date_local"></span> in your local time.</p>
+
+<p id="countdown"></p>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+
+<script type="text/javascript">
+var omgwwdc = new Date(Date.parse($('#timestamp').text()));
+
+$('#time_local').text(omgwwdc.toLocaleTimeString())
+$('#date_local').text(omgwwdc.toLocaleDateString())
+
+setInterval(function() {
+	var text = (function() {
+		var diff = (omgwwdc.getTime() - (new Date()).getTime()) / 1000;
+		var ellipsis = String.fromCharCode(0x2026);
+		
+		if(diff <= 0) {
+			return "WWDC HAS BEGUN!";
+		}
+				
+		var seconds = ('0' + Math.floor(diff % 60)).slice(-2)
+		var minutes = ('0' + Math.floor(diff % (60 * 60) / 60)).slice(-2)
+		var hours = ('0' + Math.floor(diff % (60 * 60 * 24) / (60 * 60))).slice(-2)
+		var days = Math.floor(diff / (60 * 60 * 24))
+		
+		if(diff < 60)
+			return "<b>" + seconds + " seconds" + "</b>";
+		
+		if(diff < 60 * 60)
+			return "<b>" + minutes + ":" + seconds + "</b>";
+		
+		if(diff < 60 * 60 * 24)
+			return "<b>" + hours + ":" + minutes + ":" + seconds + "</b>";
+		
+		return days + " days <b>" + hours + ":" + minutes + ":" + seconds + "</b>";
+	})();
+	
+	$('#countdown').html(text)
+}, 1000);
+
+</script>
+
+<script>
+    var _gaq=[['_setAccount','UA-41467595-1'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+</body>
+</html>
