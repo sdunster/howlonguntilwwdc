@@ -84,6 +84,13 @@ setInterval(function() {
 	$('#countdown').html(text)
 }, 1000);
 
+// hide address bar
+window.addEventListener("load", function() {
+	setTimeout(function(){
+		window.scrollTo(0, 1);
+	}, 0);
+});
+
 </script>
 
 <script>
